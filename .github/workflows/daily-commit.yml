@@ -1,24 +1,24 @@
 name: Daily Commit - 23f3001096
 
-# This runs every day at 9:30 AM UTC
+# IMPORTANT: Give write permissions!
+permissions:
+  contents: write  # This allows pushing commits
+
 on:
   schedule:
-    # Cron syntax: minute hour day month weekday
-    # 30 9 * * * = 9:30 AM every day
-    - cron: '30 9 * * *'
-  # Allow manual trigger too (for testing)
-  workflow_dispatch:
+    - cron: '30 9 * * *'  # 9:30 AM UTC daily
+  workflow_dispatch:  # Manual trigger
 
 jobs:
   daily-commit:
     runs-on: ubuntu-latest
     
     steps:
-      # Step 1: Checkout the repository
+      # Step 1: Checkout repository
       - name: Checkout repository
         uses: actions/checkout@v3
       
-      # Step 2: Configure Git with your email (THIS IS IMPORTANT!)
+      # Step 2: Configure Git with your email
       - name: Configure Git - 23f3001096@ds.study.iitm.ac.in
         run: |
           git config --global user.name "GitHub Action Bot"
@@ -31,7 +31,7 @@ jobs:
           echo "Commit by: 23f3001096" >> daily-update.txt
           echo "Workflow run: ${{ github.run_id }}" >> daily-update.txt
       
-      # Step 4: Check if anything changed
+      # Step 4: Check for changes
       - name: Check for changes
         id: git-check
         run: |
